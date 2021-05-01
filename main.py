@@ -1,31 +1,30 @@
 from replit import clear
 from art import logo
-#HINT: You can call clear() to clear the output in the console.
-
-bid_dictionary = {}
-highest_bid = 0
-highest_name = ""
-
-should_continue = True
 
 
-while should_continue:
+bids = {}
+bidding_finished = False
+
+def find_highest_bidder(bidding_record):
+  highest_bid = 0
+  winner = ""
+  # bidding_record = {"J": 123, "K": 321}
+  for bidder in bidding_record:
+    bid_amount = bidding_record[bidder]
+    if bid_amount > highest_bid: 
+      highest_bid = bid_amount
+      winner = bidder
+  print(f"The winner is {winner} with a bid of ${highest_bid}")
+
+while not bidding_finished:
   print(logo)
-  print("Welcome to the secret auction program.")
   name = input("What is your name?: ")
-  bid = int(input("What's your bid?: $"))
-  bid_dictionary[name] = bid
-  new_user = input("Are there any other bidders? Type 'yes' or 'no'. ")
-  clear()
-
-  if new_user == "no":
-    for bid in bid_dictionary:
-      bid_number = bid_dictionary[bid]
-      if bid_number > highest_bid:
-        highest_bid = bid_number
-        highest_name = bid
-
-      #bids.append(bid_number)
+  price = int(input("What is your bid?: $"))
+  bids[name] = price
+  should_continue = input("Are there any other bidders? Type 'yes or 'no'.\n")
+  if should_continue == "no":
+    bidding_finished = True
     clear()
-    print(f"The auction is won by {highest_name} with ${highest_bid}")
-    should_continue == False
+    find_highest_bidder(bids)
+  elif should_continue == "yes":
+    clear()
